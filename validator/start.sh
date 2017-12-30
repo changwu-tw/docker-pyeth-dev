@@ -3,10 +3,10 @@ service filebeat start
 
 echo "BOOTSTRAP_NODE is $BOOTSTRAP_NODE"
 if [ -z "$BOOTSTRAP_NODE" ]; then echo "BOOTSTRAP_NODE must be set" && exit 1; fi
-openssl rand -hex 32 > /root/.config/pyethapp/privkey.hex
-export PRIVKEY=`cat /root/.config/pyethapp/privkey.hex | awk '{print $1}'`
-echo "Generated random private key: $PRIVKEY" 
-perl -pi -e "s/PRIVKEY/$PRIVKEY/" /root/.config/pyethapp/config.yaml
+
+echo "Generated random private key: $PRIVATE_KEY"
+cat $PRIVATE_KEY > /root/.config/pyethapp/privkey.hex
+
 echo "Creating new account"
 /usr/local/bin/pyethapp --password /root/.config/pyethapp/password.txt account new
 
